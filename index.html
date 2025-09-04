@@ -8,33 +8,46 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <h1>Admin Panel – Faiz_F JB Store</h1>
+  <!-- PIN Gate -->
+  <div id="pinGate">
+    <div class="pin-box">
+      <h2>Admin Login</h2>
+      <input id="pinInput" type="password" placeholder="Password" maxlength="6"/>
+      <button onclick="checkPin()">Masuk</button>
+    </div>
+  </div>
 
-  <form id="addForm">
-    <select name="cat" required>
-      <option value="">Pilih Kategori</option>
-      <option>FF</option><option>ML</option><option>GAG</option>
-    </select>
-    <input name="nama" placeholder="Nama Produk" required/>
-    <input name="stok" type="number" placeholder="Stok" required/>
-    <input name="harga" type="number" placeholder="Harga (Rp)" required/>
-    <label>Foto Thumbnail
-      <input name="thumb" type="file" accept="image/*" required/>
-      <img id="thumbPrev" class="preview"/>
-    </label>
-    <label>Foto Detail
-      <input name="detail" type="file" accept="image/*" multiple/>
-      <div id="detailPrev" class="preview-multi"></div>
-    </label>
-    <button type="submit">Simpan Produk</button>
-  </form>
+  <!-- Panel Admin -->
+  <div id="adminPanel" style="display:none">
+    <h1>Admin Panel – Faiz_F JB Store</h1>
+    <form id="addForm">
+      <select name="cat" required>
+        <option value="">Pilih Kategori</option>
+        <option>FF</option><option>ML</option><option>GAG</option>
+      </select>
+      <input name="nama" placeholder="Nama Produk" required/>
+      <input name="stok" type="number" placeholder="Stok" required/>
+      <input name="harga" type="number" placeholder="Harga (Rp)" required/>
 
-  <h2>Daftar Produk</h2>
-  <ul id="productList"></ul>
+      <label>Foto Thumbnail
+        <input name="thumb" type="file" accept="image/*" required/>
+        <img id="thumbPrev" class="preview"/>
+      </label>
 
-  <a class="admin-link" href="https://jbstorefaiz.vercel.app">⬅ Kembali ke Toko</a>
+      <label>Foto Detail
+        <input name="detail" type="file" accept="image/*" multiple/>
+        <div id="detailPrev" class="preview-multi"></div>
+      </label>
+
+      <button type="submit">Simpan Produk</button>
+    </form>
+
+    <h2>Daftar Produk</h2>
+    <ul id="productList"></ul>
+    <a class="admin-link" href="https://faiz-f-jbstore.vercel.app/">⬅ Kembali ke Toko</a>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module" src="admin.js"></script>
 </body>
-</html>
+      </html>
