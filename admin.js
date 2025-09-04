@@ -1,10 +1,22 @@
-// Konfigurasi Supabase
 const SUPABASE_URL = 'https://dgsyyzfcyyyahvapocjg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnc3l5emZjeXl5YWh2YXBvY2pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MDUwNTQsImV4cCI6MjA3MjQ4MTA1NH0.5iUddYtSx7BTjkph0gea2xbeP-85X5Ee53X5laE1VCg';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById('addForm');
 const list = document.getElementById('productList');
+const pinGate = document.getElementById('pinGate');
+const adminPanel = document.getElementById('adminPanel');
+
+// PIN
+window.checkPin = () => {
+  if (document.getElementById('pinInput').value === 'JBF812') {
+    pinGate.style.display = 'none';
+    adminPanel.style.display = 'block';
+    refresh();
+  } else {
+    alert('Password salah!');
+  }
+};
 
 // Preview foto
 form.thumb.onchange = e => {
@@ -22,8 +34,7 @@ form.detail.onchange = e => {
   });
 };
 
-// Ambil & tampilkan produk
-refresh();
+// Tampilkan produk
 async function refresh() {
   const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
   list.innerHTML = (data || []).map(p => `
@@ -39,7 +50,6 @@ async function refresh() {
 form.onsubmit = async e => {
   e.preventDefault();
   const fd = new FormData(form);
-
   const upload = async file => {
     const fname = Date.now() + '-' + file.name;
     const { data, error } = await supabaseClient.storage.from('public').upload(fname, file);
