@@ -6,48 +6,67 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="icon" href="assets/favicon.ico"/>
   <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- PIN Gate -->
-  <div id="pinGate">
-    <div class="pin-box">
-      <h2>Admin Login</h2>
-      <input id="pinInput" type="password" placeholder="Password" maxlength="6"/>
-      <button onclick="checkPin()">Masuk</button>
-    </div>
+  <div class="background-animation">
+    <div class="gradient-sphere sphere-1"></div>
+    <div class="gradient-sphere sphere-2"></div>
+    <div class="gradient-sphere sphere-3"></div>
   </div>
 
-  <!-- Panel Admin -->
-  <div id="adminPanel" style="display:none">
-    <h1>Admin Panel – Faiz_F JB Store</h1>
-    <form id="addForm">
-      <select name="cat" required>
-        <option value="">Pilih Kategori</option>
-        <option>FF</option><option>ML</option><option>GAG</option>
-      </select>
-      <input name="nama" placeholder="Nama Produk" required/>
-      <input name="stok" type="number" placeholder="Stok" required/>
-      <input name="harga" type="number" placeholder="Harga (Rp)" required/>
+  <!-- Panel Admin Langsung -->
+  <div id="adminPanel">
+    <header>
+      <h1><i class="fas fa-crown"></i> Admin Panel – Faiz_F JB Store</h1>
+      <a class="admin-link" href="https://faiz-f-jbstore.vercel.app/" target="_blank">
+        <i class="fas fa-store"></i> Lihat Toko
+      </a>
+    </header>
 
-      <label>Foto Thumbnail
-        <input name="thumb" type="file" accept="image/*" required/>
-        <img id="thumbPrev" class="preview"/>
-      </label>
+    <section class="form-section">
+      <h2>Tambah Produk Baru</h2>
+      <form id="addForm">
+        <div class="form-grid">
+          <select name="cat" required>
+            <option value="">Pilih Kategori</option>
+            <option value="FF">Free Fire</option>
+            <option value="ML">Mobile Legends</option>
+            <option value="RB">Roblox</option>
+            <option value="LAIN">Lainnya</option>
+          </select>
 
-      <label>Foto Detail
-        <input name="detail" type="file" accept="image/*" multiple/>
-        <div id="detailPrev" class="preview-multi"></div>
-      </label>
+          <input name="nama" placeholder="Nama Produk" required/>
+          <input name="stok" type="number" placeholder="Stok" required/>
+          <input name="harga" type="number" placeholder="Harga (Rp)" required/>
+        </div>
 
-      <button type="submit">Simpan Produk</button>
-    </form>
+        <div class="file-upload-group">
+          <label>Foto Thumbnail
+            <input name="thumb" type="file" accept="image/*" required/>
+            <img id="thumbPrev" class="preview"/>
+          </label>
 
-    <h2>Daftar Produk</h2>
-    <ul id="productList"></ul>
-    <a class="admin-link" href="https://faiz-f-jbstore.vercel.app/">⬅ Kembali ke Toko</a>
+          <label>Foto Detail (bisa lebih dari 1)
+            <input name="detail" type="file" accept="image/*" multiple/>
+            <div id="detailPrev" class="preview-multi"></div>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-save"></i> Simpan Produk
+        </button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <h2>Daftar Produk</h2>
+      <div id="productList" class="product-grid"></div>
+    </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module" src="admin.js"></script>
 </body>
-      </html>
+  </html>
