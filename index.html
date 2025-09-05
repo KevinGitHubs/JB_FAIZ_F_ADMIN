@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8"/>
-  <title>Admin – Faiz_F JB Store</title>
+  <title>Admin – FaizF JB Store</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="icon" href="assets/favicon.ico"/>
   <link rel="stylesheet" href="style.css"/>
@@ -10,63 +10,54 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="background-animation">
-    <div class="gradient-sphere sphere-1"></div>
-    <div class="gradient-sphere sphere-2"></div>
-    <div class="gradient-sphere sphere-3"></div>
-  </div>
+  <div class="background-animation"><div class="gradient-sphere sphere-1"></div><div class="gradient-sphere sphere-2"></div><div class="gradient-sphere sphere-3"></div></div>
 
-  <!-- Panel Admin Langsung -->
-  <div id="adminPanel">
-    <header>
-      <h1><i class="fas fa-crown"></i> Admin Panel – Faiz_F JB Store</h1>
-      <a class="admin-link" href="https://faiz-f-jbstore.vercel.app/" target="_blank">
-        <i class="fas fa-store"></i> Lihat Toko
-      </a>
-    </header>
+  <header>
+    <h1><i class="fas fa-crown"></i> Admin Panel – FaizF JB Store</h1>
+    <a class="admin-link" href="https://jbstorefaizf.web.app" target="_blank"><i class="fas fa-store"></i> Lihat Toko</a>
+  </header>
 
-    <section class="form-section">
-      <h2>Tambah Produk Baru</h2>
-      <form id="addForm">
-        <div class="form-grid">
-          <select name="cat" required>
-            <option value="">Pilih Kategori</option>
-            <option value="FF">Free Fire</option>
-            <option value="ML">Mobile Legends</option>
-            <option value="RB">Roblox</option>
-            <option value="LAIN">Lainnya</option>
-          </select>
+  <section class="form-section">
+    <h2>Tambah Produk Baru</h2>
+    <form id="addForm">
+      <div class="form-grid">
+        <select name="cat" required>
+          <option value="">Pilih Kategori</option>
+          <option value="FF">Free Fire</option>
+          <option value="ML">Mobile Legends</option>
+          <option value="RB">Roblox</option>
+          <option value="LAIN">Lainnya</option>
+        </select>
+        <input name="nama" placeholder="Nama Produk" required/>
+        <input name="stok" type="number" placeholder="Stok" required/>
+        <input name="harga" type="number" placeholder="Harga (Rp)" required/>
+      </div>
 
-          <input name="nama" placeholder="Nama Produk" required/>
-          <input name="stok" type="number" placeholder="Stok" required/>
-          <input name="harga" type="number" placeholder="Harga (Rp)" required/>
-        </div>
+      <label>Deskripsi (opsional)
+        <textarea name="deskripsi" rows="3" placeholder="Contoh: Akun FF lvl 80, skin 30+, dll."></textarea>
+      </label>
 
-        <div class="file-upload-group">
-          <label>Foto Thumbnail
-            <input name="thumb" type="file" accept="image/*" required/>
-            <img id="thumbPrev" class="preview"/>
-          </label>
+      <div class="file-upload-group">
+        <label>Foto Thumbnail
+          <input name="thumb" type="file" accept="image/*" required/>
+          <img id="thumbPrev" class="preview"/>
+        </label>
+        <label>Foto Detail (bisa lebih dari 1)
+          <input name="detail" type="file" accept="image/*" multiple/>
+          <div id="detailPrev" class="preview-multi"></div>
+        </label>
+      </div>
 
-          <label>Foto Detail (bisa lebih dari 1)
-            <input name="detail" type="file" accept="image/*" multiple/>
-            <div id="detailPrev" class="preview-multi"></div>
-          </label>
-        </div>
+      <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Simpan Produk</button>
+    </form>
+  </section>
 
-        <button type="submit" class="submit-btn">
-          <i class="fas fa-save"></i> Simpan Produk
-        </button>
-      </form>
-    </section>
+  <section class="list-section">
+    <h2>Daftar Produk (Realtime)</h2>
+    <div id="productList" class="product-grid"></div>
+  </section>
 
-    <section class="list-section">
-      <h2>Daftar Produk</h2>
-      <div id="productList" class="product-grid"></div>
-    </section>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="firebase-config.js"></script>
   <script type="module" src="admin.js"></script>
 </body>
-            </html>
+</html>
