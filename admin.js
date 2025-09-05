@@ -1,16 +1,3 @@
-      </button>
-    </div>
-  `).join('');
-}
-
-// === UTILITAS ===
-function getCategoryName(cat) {
-  const names = { FF: 'Free Fire', ML: 'Mobile Legends', RB: 'Roblox', LAIN: 'Lainnya' };
-  return names[cat] || cat;
-}
-
-// === LOAD AWAL ===
-refresh();
 // === CONFIG SUPABASE ===
 const SUPABASE_URL = 'https://dgsyyzfcyyyahvapocjg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnc3l5emZjeXl5YWh2YXBvY2pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MDUwNTQsImV4cCI6MjA3MjQ4MTA1NH0.5iUddYtSx7BTjkph0gea2xbeP-85X5Ee53X5laE1VCg';
