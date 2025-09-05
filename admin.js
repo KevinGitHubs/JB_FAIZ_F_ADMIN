@@ -1,22 +1,10 @@
 const SUPABASE_URL = 'https://dgsyyzfcyyyahvapocjg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnc3l5emZjeXl5YWh2YXBvY2pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MDUwNTQsImV4cCI6MjA3MjQ4MTA1NH0.5iUddYtSx7BTjkph0gea2xbeP-85X5Ee53X5laE1VCg';
+
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById('addForm');
 const list = document.getElementById('productList');
-const pinGate = document.getElementById('pinGate');
-const adminPanel = document.getElementById('adminPanel');
-
-// PIN
-window.checkPin = () => {
-  if (document.getElementById('pinInput').value === 'JBF812') {
-    pinGate.style.display = 'none';
-    adminPanel.style.display = 'block';
-    refresh();
-  } else {
-    alert('Password salah!');
-  }
-};
 
 // Preview foto
 form.thumb.onchange = e => {
@@ -24,6 +12,7 @@ form.thumb.onchange = e => {
   img.src = URL.createObjectURL(e.target.files[0]);
   img.style.display = 'block';
 };
+
 form.detail.onchange = e => {
   const box = document.getElementById('detailPrev');
   box.innerHTML = '';
@@ -36,13 +25,24 @@ form.detail.onchange = e => {
 
 // Tampilkan produk
 async function refresh() {
-  const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
+  const { data } = await supabaseClient
+    .from('products')
+    .select('*')
+    .order('created_at', { ascending: false });
+
   list.innerHTML = (data || []).map(p => `
-    <li>
-      <img src="${p.thumb}">
-      <span>${p.nama} (${p.cat}) – Stok ${p.stok} – Rp${p.harga.toLocaleString()}</span>
-      <button onclick="del('${p.id}')">Hapus</button>
-    </li>
+    <div class="product-card">
+      <img src="${p.thumb}" alt="${p.nama}">
+      <div class="product-info">
+        <h3>${p.nama}</h3>
+        <p class="cat">${getCategoryName(p.cat)}</p>
+        <p class="stok">Stok: ${p.stok}</p>
+        <p class="harga">Rp${p.harga.toLocaleString()}</p>
+      </div>
+      <button onclick="del('${p.id}')" class="delete-btn">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
   `).join('');
 }
 
@@ -50,16 +50,19 @@ async function refresh() {
 form.onsubmit = async e => {
   e.preventDefault();
   const fd = new FormData(form);
+
   const upload = async file => {
     const fname = Date.now() + '-' + file.name;
-    const { data, error } = await supabaseClient.storage.from('public').upload(fname, file);
+    const { data, error } = await supabaseClient.storage
+      .from('public')
+      .upload(fname, file);
     return error ? null : supabaseClient.storage.from('public').getPublicUrl(fname).data.publicUrl;
   };
 
   const thumbUrl = await upload(fd.get('thumb'));
   const detailUrls = await Promise.all([...fd.getAll('detail')].map(upload));
 
-  await supabaseClient.from('products').insert({
+  const { error } = await supabaseClient.from('products').insert({
     cat: fd.get('cat'),
     nama: fd.get('nama'),
     stok: +fd.get('stok'),
@@ -67,11 +70,29 @@ form.onsubmit = async e => {
     thumb: thumbUrl,
     detail: detailUrls.filter(u => u)
   });
-  form.reset(); refresh();
+
+  if (error) {
+    alert('Gagal menyimpan produk: ' + error.message);
+  } else {
+    form.reset();
+    document.getElementById('thumbPrev').style.display = 'none';
+    document.getElementById('detailPrev').innerHTML = '';
+    refresh();
+  }
 };
 
 // Hapus produk
 window.del = async id => {
+  const conf = confirm('Yakin ingin menghapus produk ini?');
+  if (!conf) return;
   await supabaseClient.from('products').delete().eq('id', id);
   refresh();
 };
+
+function getCategoryName(cat) {
+  const names = { FF: 'Free Fire', ML: 'Mobile Legends', RB: 'Roblox', LAIN: 'Lainnya' };
+  return names[cat] || cat;
+}
+
+// Load awal
+refresh();
